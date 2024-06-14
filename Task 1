@@ -1,0 +1,41 @@
+def caesar_cipher_encrypt(message, shift):
+    encrypted_message = ""
+    for char in message:
+        if char.isalpha():
+            shift_base = 65 if char.isupper() else 97
+            encrypted_char = chr((ord(char) - shift_base + shift) % 26 + shift_base)
+        else:
+            encrypted_char = char
+        encrypted_message += encrypted_char
+    return encrypted_message
+
+def caesar_cipher_decrypt(encrypted_message, shift):
+    return caesar_cipher_encrypt(encrypted_message, -shift)
+
+def main():
+    while True:
+        choice = input("Would you like to (e)encrypt or (d)decrypt a message? (e/d): ").lower()
+        if choice not in ('e', 'd'):
+            print("Invalid choice. Please enter 'e' to encrypt or 'd' to decrypt.")
+            continue
+
+        message = input("Enter your message: ")
+        try:
+            shift = int(input("Enter shift value: "))
+        except ValueError:
+            print("Invalid shift value. Please enter an integer.")
+            continue
+
+        if choice == 'e':
+            result = caesar_cipher_encrypt(message, shift)
+            print(f"Encrypted message: {result}")
+        else:
+            result = caesar_cipher_decrypt(message, shift)
+            print(f"Decrypted message: {result}")
+
+        again = input("Do you want to encrypt/decrypt another message? (y/n): ").lower()
+        if again != 'y':
+            break
+
+if __name__ == "__main__":
+    main()
